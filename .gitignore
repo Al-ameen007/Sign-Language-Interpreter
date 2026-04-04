@@ -1,6 +1,9 @@
 # Virtual environment
 .venv/
 
+# uv lock
+uv.lock
+
 # Build artifacts
 dist/
 build/
