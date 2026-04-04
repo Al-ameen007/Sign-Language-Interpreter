@@ -96,7 +96,7 @@ def main():
         print(f"Training samples: {len(x_train)}, Test samples: {len(x_test)}")
 
         print("\nPreparing training dataset with MediaPipe...")
-        from preprocessing import process_videos_parallel
+        from arsl.preprocessing import process_videos_parallel
 
         train_processed = process_videos_parallel(x_train.tolist(), y_train.tolist(), max_workers=args.max_workers)
 
@@ -104,8 +104,9 @@ def main():
         test_processed = process_videos_parallel(x_test.tolist(), y_test.tolist(), max_workers=args.max_workers)
 
         print("\nCreating graph datasets...")
-        from data import create_graph_data_list
         from sklearn.preprocessing import LabelEncoder
+
+        from arsl.data import create_graph_data_list
 
         label_encoder = LabelEncoder()
         label_encoder.fit(y_train.tolist() + y_test.tolist())

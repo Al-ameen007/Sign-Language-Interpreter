@@ -152,8 +152,8 @@ def construct_graph(landmarks):
         g.add_node(i)
 
     # Add spatial edges for each frame
-    for _ in range(t):
-        offset = t * num_keypoints
+    for frame_idx in range(t):
+        offset = frame_idx * num_keypoints
         for i, j in spatial_edges:
             g.add_edge(offset + i, offset + j)
 

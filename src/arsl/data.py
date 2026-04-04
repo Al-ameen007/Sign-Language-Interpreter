@@ -1,11 +1,12 @@
 import pickle
 
 import torch
-from preprocessing import process_videos_parallel
 from sklearn.preprocessing import LabelEncoder
 from torch_geometric.data import Data
 from torch_geometric.loader import DataLoader
 from torch_geometric.utils import dense_to_sparse
+
+from arsl.preprocessing import process_videos_parallel
 
 
 def create_graph_data_list(x_list, adj_matrices, labels, label_encoder):
