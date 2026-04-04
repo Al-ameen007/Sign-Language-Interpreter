@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+
+      - name: Run Ruff Check
+        run: uv run ruff check src/ tests/
+
+      - name: Run Ruff Format
+        run: uv run ruff format --check src/ tests/
+
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11"]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install uv and Python
+        uses: astral-sh/setup-uv@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+          enable-cache: true
+
+      - name: Install dependencies
+        run: uv pip install -e ".[all,dev]"
+
+      - name: Run tests with coverage
+        run: uv run pytest --cov=arsl --cov-report=xml
